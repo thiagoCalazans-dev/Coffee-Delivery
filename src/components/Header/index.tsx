@@ -1,5 +1,18 @@
-import { HeaderContainer, RightNavOptionsContainer } from "./styles";
+import {
+  AdressContainer,
+  CartButton,
+  HeaderContainer,
+  RightNavOptionsContainer,
+} from "./styles";
 import Logo from "../../assets/Logo.svg";
+import { MapPin, ShoppingCart } from "phosphor-react";
+import { NavLink } from "react-router-dom";
+
+const shoppingCartCollor = "#C47F17";
+const MapPinCollor = "#8047F8";
+
+const city = "São Paulo";
+const state = "SP";
 
 export const Header = () => {
   return (
@@ -7,8 +20,15 @@ export const Header = () => {
       <nav>
         <img src={Logo} />
         <RightNavOptionsContainer>
-          <div>locale</div>
-          <div>cart</div>
+          <AdressContainer>
+            <MapPin color={MapPinCollor} size={16} weight="fill" />
+            <span> {`${city}, ${state}`}</span>
+          </AdressContainer>
+          <CartButton>
+            <NavLink to="/checkout">
+              <ShoppingCart color={shoppingCartCollor} weight="fill" />
+            </NavLink>
+          </CartButton>
         </RightNavOptionsContainer>
       </nav>
     </HeaderContainer>
