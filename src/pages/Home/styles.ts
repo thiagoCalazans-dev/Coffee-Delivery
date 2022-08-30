@@ -2,8 +2,13 @@ import styled from "styled-components";
 
 export const HomeContainer = styled.main``;
 
-export const ProductsSection = styled.section``;
+export const ProductsSection = styled.section`
+  padding: 2rem 10rem 10rem 10rem;
 
-export const CatalogContainer = styled.div``;
-
-export const CardContainer = styled.div``;
+  h2 {
+    font-family: "Baloo 2";
+    font-weight: 800;
+    font-size: 2rem;
+    line-height: 1.3;
+  }
+`;

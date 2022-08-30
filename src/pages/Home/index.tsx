@@ -1,15 +1,11 @@
 import { gql, useQuery } from "@apollo/client";
+import { Catalog } from "./components/Catalog";
 import { IntroSection } from "./components/IntroSection";
-import {
-  CardContainer,
-  CatalogContainer,
-  HomeContainer,
-  ProductsSection,
-} from "./styles";
+import { HomeContainer, ProductsSection } from "./styles";
 
 const GET_PRODUCTS_QUERY = gql`
   query {
-    products {
+    products(first: 20) {
       id
       title
       description
@@ -34,7 +30,7 @@ interface Category {
   title: string;
 }
 
-interface Product {
+export interface Product {
   id: string;
   title: string;
   description: string;
@@ -46,28 +42,12 @@ interface Product {
 export const Home = () => {
   const { data } = useQuery<{ products: Product[] }>(GET_PRODUCTS_QUERY);
 
-  console.log(data);
-
   return (
     <HomeContainer>
       <IntroSection />
       <ProductsSection>
         <h2>Nossos cafés</h2>
-        <CatalogContainer>
-          {data?.products.map((product) => (
-            <CardContainer key={product.id}>
-              <>
-                <img src={product.image.url} />
-                {product.categories.map((category) => {
-                  <span key={category.id}>{category.title}</span>;
-                })}
-                <strong>{product.title}</strong>
-                <p>{product.description}</p>
-                <span>{product.value}</span>
-              </>
-            </CardContainer>
-          ))}
-        </CatalogContainer>
+        <Catalog data={data!} />
       </ProductsSection>
     </HomeContainer>
   );
