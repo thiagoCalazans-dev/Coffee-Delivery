@@ -42,6 +42,8 @@ export interface Product {
 export const Home = () => {
   const { data } = useQuery<{ products: Product[] }>(GET_PRODUCTS_QUERY);
 
+  console.log(data);
+
   return (
     <HomeContainer>
       <IntroSection />

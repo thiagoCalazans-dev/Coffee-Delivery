@@ -40,7 +40,7 @@ export const AdressContainer = styled.div`
   }
 `;
 
-export const CartButton = styled.a`
+export const CartButton = styled.div`
   padding: 0.5rem;
   background-color: ${(props) => props.theme["brand-yellow-light"]};
   border-radius: 6px;

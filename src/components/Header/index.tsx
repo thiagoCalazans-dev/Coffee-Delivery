@@ -24,11 +24,11 @@ export const Header = () => {
             <MapPin color={MapPinCollor} size={16} weight="fill" />
             <span> {`${city}, ${state}`}</span>
           </AdressContainer>
-          <CartButton>
-            <NavLink to="/checkout">
+          <NavLink to="/checkout">
+            <CartButton>
               <ShoppingCart color={shoppingCartCollor} weight="fill" />
-            </NavLink>
-          </CartButton>
+            </CartButton>
+          </NavLink>
         </RightNavOptionsContainer>
       </nav>
     </HeaderContainer>
