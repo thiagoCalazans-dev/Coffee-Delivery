@@ -116,6 +116,8 @@ export const RadioGroupControl = styled.div`
     line-height: 1.6;
     text-transform: uppercase;
     border: 1px solid transparent;
+
+    cursor: pointer;
   }
 
   input[type="radio"] {
@@ -123,6 +125,14 @@ export const RadioGroupControl = styled.div`
       + label {
         background-color: ${(props) => props.theme["brand-purple-light"]};
         border: 1px solid ${(props) => props.theme["brand-purple"]};
+      }
+    }
+  }
+
+  input[type="radio"] {
+    &:hover {
+      + label {
+        background-color: ${(props) => props.theme["base-500"]};
       }
     }
   }

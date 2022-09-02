@@ -26,6 +26,7 @@ export const Header = () => {
           </AdressContainer>
           <NavLink to="/checkout">
             <CartButton>
+              <span>1</span>
               <ShoppingCart color={shoppingCartCollor} weight="fill" />
             </CartButton>
           </NavLink>

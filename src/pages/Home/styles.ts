@@ -12,3 +12,10 @@ export const ProductsSection = styled.section`
     line-height: 1.3;
   }
 `;
+
+export const CatalogContainer = styled.div`
+  margin-top: 3.375rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+`;

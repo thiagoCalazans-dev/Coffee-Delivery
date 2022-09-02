@@ -1,12 +1,5 @@
 import styled from "styled-components";
 
-export const CatalogContainer = styled.div`
-  margin-top: 3.375rem;
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-`;
-
 export const Card = styled.div`
   background-color: ${(props) => props.theme["base-200"]};
   border-radius: 6px 36px;

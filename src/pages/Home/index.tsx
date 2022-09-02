@@ -1,55 +1,22 @@
-import { gql, useQuery } from "@apollo/client";
-import { Catalog } from "./components/Catalog";
+import { useContext } from "react";
+import { ProductsContext } from "../../context/ProductsContext";
+import { ProductCard } from "./components/ProductCard";
 import { IntroSection } from "./components/IntroSection";
-import { HomeContainer, ProductsSection } from "./styles";
-
-const GET_PRODUCTS_QUERY = gql`
-  query {
-    products(first: 20) {
-      id
-      title
-      description
-      value
-      image {
-        url
-      }
-      categories {
-        id
-        title
-      }
-    }
-  }
-`;
-
-interface Image {
-  url: string;
-}
-
-interface Category {
-  id: string;
-  title: string;
-}
-
-export interface Product {
-  id: string;
-  title: string;
-  description: string;
-  value: number;
-  image: Image;
-  categories: Category[];
-}
+import { CatalogContainer, HomeContainer, ProductsSection } from "./styles";
 
 export const Home = () => {
-  const { data } = useQuery<{ products: Product[] }>(GET_PRODUCTS_QUERY);
-
-  console.log(data);
+  const { productList } = useContext(ProductsContext);
 
   return (
     <HomeContainer>
       <IntroSection />
       <ProductsSection>
         <h2>Nossos cafés</h2>
-        <Catalog data={data!} />
+        <CatalogContainer>
+          {productList?.products.map((product) => (
+            <ProductCard product={product} />
+          ))}
+        </CatalogContainer>
       </ProductsSection>
     </HomeContainer>
   );

@@ -1,49 +1,34 @@
 import { Minus, Plus, Trash } from "phosphor-react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { ProductsContext } from "../../context/ProductsContext";
+import { ProductCartCard } from "./components/ProductCartCard";
+import { TotalContent } from "./components/TotalContent";
 import { UserInformations } from "./components/UserInformations";
-import {
-  ActionsBox,
-  Card,
-  CartInformations,
-  CheckoutContainer,
-  Counter,
-  MiddleContent,
-  ProductCart,
-  RemoveButton,
-  Title,
-  Value,
-} from "./styles";
+import { AcceptButton, Card, CheckoutContainer, Title } from "./styles";
 
 export const Checkout = () => {
+  const navigate = useNavigate();
+
+  const { productsCartList } = useContext(ProductsContext);
+
   return (
     <CheckoutContainer>
       <UserInformations />
-      <CartInformations>
+      <section>
         <Title>Cafés selecionados</Title>
         <Card>
-          <ProductCart>
-            <img src="https://media.graphassets.com/ACiThggHQwWS4ACGtIi4" />
-            <MiddleContent>
-              <strong>Expresso Tradicional</strong>
-              <ActionsBox>
-                <Counter>
-                  <button>
-                    <Minus size={14} color="#8047f8" />
-                  </button>
-                  1
-                  <button>
-                    <Plus size={14} color="#8047f8" />
-                  </button>
-                </Counter>
-                <RemoveButton>
-                  <Trash size={16} color="#8047f8" />
-                  <span>Remover</span>
-                </RemoveButton>
-              </ActionsBox>
-            </MiddleContent>
-            <Value>R$ 9,90</Value>
-          </ProductCart>
+          <>
+            {productsCartList.map((product) => {
+              <ProductCartCard product={product} />;
+            })}
+          </>
+          <TotalContent />
+          <AcceptButton onClick={() => navigate("/success")}>
+            Confirmar Pedido
+          </AcceptButton>
         </Card>
-      </CartInformations>
+      </section>
     </CheckoutContainer>
   );
 };

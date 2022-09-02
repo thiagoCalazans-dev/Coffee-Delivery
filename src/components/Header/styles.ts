@@ -41,6 +41,7 @@ export const AdressContainer = styled.div`
 `;
 
 export const CartButton = styled.div`
+  position: relative;
   padding: 0.5rem;
   background-color: ${(props) => props.theme["brand-yellow-light"]};
   border-radius: 6px;
@@ -50,4 +51,21 @@ export const CartButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  > span {
+    position: absolute;
+    left: calc(100% - 0.625rem);
+    bottom: calc(100% - 0.625rem);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    background: ${(props) => props.theme["brand-yellow-dark"]};
+    border-radius: 1000px;
+    color: ${(props) => props.theme.white};
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
 `;
