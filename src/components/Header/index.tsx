@@ -7,6 +7,8 @@ import {
 import Logo from "../../assets/Logo.svg";
 import { MapPin, ShoppingCart } from "phosphor-react";
 import { NavLink } from "react-router-dom";
+import { ProductsContext } from "../../context/ProductsContext";
+import { useContext } from "react";
 
 const shoppingCartCollor = "#C47F17";
 const MapPinCollor = "#8047F8";
@@ -15,10 +17,14 @@ const city = "São Paulo";
 const state = "SP";
 
 export const Header = () => {
+  const { productsCartState } = useContext(ProductsContext);
+
   return (
     <HeaderContainer>
       <nav>
-        <img src={Logo} />
+        <NavLink to="/">
+          <img src={Logo} />
+        </NavLink>
         <RightNavOptionsContainer>
           <AdressContainer>
             <MapPin color={MapPinCollor} size={16} weight="fill" />
@@ -26,7 +32,7 @@ export const Header = () => {
           </AdressContainer>
           <NavLink to="/checkout">
             <CartButton>
-              <span>1</span>
+              <span>{productsCartState.length}</span>
               <ShoppingCart color={shoppingCartCollor} weight="fill" />
             </CartButton>
           </NavLink>

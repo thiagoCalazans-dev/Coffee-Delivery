@@ -14,7 +14,7 @@ export const Home = () => {
         <h2>Nossos cafés</h2>
         <CatalogContainer>
           {productList?.products.map((product) => (
-            <ProductCard product={product} />
+            <ProductCard key={product.id} product={product} />
           ))}
         </CatalogContainer>
       </ProductsSection>

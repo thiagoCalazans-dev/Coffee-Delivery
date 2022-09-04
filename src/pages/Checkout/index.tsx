@@ -10,7 +10,7 @@ import { AcceptButton, Card, CheckoutContainer, Title } from "./styles";
 export const Checkout = () => {
   const navigate = useNavigate();
 
-  const { productsCartList } = useContext(ProductsContext);
+  const { productsCartState, productList } = useContext(ProductsContext);
 
   return (
     <CheckoutContainer>
@@ -19,14 +19,19 @@ export const Checkout = () => {
         <Title>Cafés selecionados</Title>
         <Card>
           <>
-            {productsCartList.map((product) => {
-              <ProductCartCard product={product} />;
-            })}
+            {productsCartState.length === 0
+              ? "Adcione algo ao seu carrinho"
+              : productsCartState.map((product) => {
+                  <ProductCartCard key={product.id} product={product} />;
+                })}
           </>
           <TotalContent />
           <AcceptButton onClick={() => navigate("/success")}>
             Confirmar Pedido
           </AcceptButton>
+          <button onClick={() => console.log(productsCartState)}>
+            aperte aqui
+          </button>
         </Card>
       </section>
     </CheckoutContainer>

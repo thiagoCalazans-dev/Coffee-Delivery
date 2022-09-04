@@ -39,7 +39,7 @@ export interface ProductOnCart {
 
 interface ProductsContextType {
   productList: { products: Product[] } | undefined;
-  productsCartList: ProductOnCart[];
+  productsCartState: ProductOnCart[];
   addProductCart: (product: ProductOnCart) => void;
 }
 
@@ -68,8 +68,6 @@ export const ProductsContextProvider = ({
     GET_PRODUCTS_QUERY
   );
 
-  const [productsCartList, setProductsCartList] = useState<ProductOnCart[]>([]);
-
   const [productsCartState, dispatch] = useReducer(ProductReducer, []);
 
   const addProductCart = (product: ProductOnCart) => {
@@ -78,7 +76,7 @@ export const ProductsContextProvider = ({
 
   return (
     <ProductsContext.Provider
-      value={{ productList, productsCartList, addProductCart }}
+      value={{ productList, productsCartState, addProductCart }}
     >
       {children}
     </ProductsContext.Provider>
