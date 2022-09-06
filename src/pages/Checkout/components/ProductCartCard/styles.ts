@@ -5,6 +5,7 @@ export const ProductCartContainer = styled.div`
 
   padding-bottom: 1.5rem;
   border-bottom: 1px solid ${(props) => props.theme["base-400"]};
+  margin-bottom: 1.5rem;
 
   img {
     width: 4rem;

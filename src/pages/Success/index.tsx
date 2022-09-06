@@ -8,6 +8,8 @@ import {
 } from "./styles";
 import moto from "../../assets/moto.svg";
 import { CurrencyDollar, MapPin, Timer } from "phosphor-react";
+import { useContext } from "react";
+import { ProductsContext } from "../../context/ProductsContext";
 
 export const Success = () => {
   return (
