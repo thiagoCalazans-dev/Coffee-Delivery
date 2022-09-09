@@ -1,5 +1,6 @@
 import { Minus, Plus, Trash } from "phosphor-react";
-import { ProductOnCart } from "../../../../context/ProductsContext";
+import { useContext } from "react";
+import { ProductsContext, ShoppingCartProduct } from "../../../../context/ProductsContext";
 import {
   ActionsBox,
   Counter,
@@ -10,15 +11,21 @@ import {
 } from "./styles";
 
 interface ProductCartCardProps {
-  product: ProductOnCart;
+  product: ShoppingCartProduct;
 }
 
 export const ProductCartCard = ({ product }: ProductCartCardProps) => {
+
+  const {productList} = useContext(ProductsContext)
+
+  const [cartProduct] = productList!.products.filter((item) => item.id === product.productid)
+
+
   return (
     <ProductCartContainer>
-      <img src={product.image.url} />
+      <img src={cartProduct.image.url} />
       <MiddleContent>
-        <strong>{product.title}</strong>
+        <strong>{cartProduct.title}</strong>
         <ActionsBox>
           <Counter>
             <button>
@@ -35,7 +42,7 @@ export const ProductCartCard = ({ product }: ProductCartCardProps) => {
           </RemoveButton>
         </ActionsBox>
       </MiddleContent>
-      <Value>{`R$ ${product.value}`}</Value>
+      <Value>{`R$ ${cartProduct.value}`}</Value>
     </ProductCartContainer>
   );
 };

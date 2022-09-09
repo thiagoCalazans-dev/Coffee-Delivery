@@ -1,4 +1,3 @@
-import { Minus, Plus, Trash } from "phosphor-react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProductsContext } from "../../context/ProductsContext";
@@ -10,7 +9,7 @@ import { AcceptButton, Card, CheckoutContainer, Title } from "./styles";
 export const Checkout = () => {
   const navigate = useNavigate();
 
-  const { shoppingCart, productList } = useContext(ProductsContext);
+  const { shoppingCart } = useContext(ProductsContext);
 
   return (
     <CheckoutContainer>
@@ -23,7 +22,7 @@ export const Checkout = () => {
             : shoppingCart.map((cartItens) => {
                 return (
                   <ProductCartCard
-                    key={cartItens.product.id}
+                    key={cartItens.productid}
                     product={cartItens}
                   />
                 );

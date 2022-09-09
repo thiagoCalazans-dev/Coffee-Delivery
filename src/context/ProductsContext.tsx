@@ -28,9 +28,8 @@ export interface Product {
 }
 
 export interface ShoppingCartProduct {
-  product: Product;
+  productid: string;
   quantity: number;
-  totalValue: number;
 }
 
 interface ProductsContextType {
@@ -69,7 +68,7 @@ export const ProductsContextProvider = ({
   // const [productsCartState, dispatch] = useReducer(ProductReducer, []);
 
   const addProductCart = (product: ShoppingCartProduct) => {
-    console.log(product);
+    setShoppingCart([...shoppingCart, product]);
   };
 
   return (

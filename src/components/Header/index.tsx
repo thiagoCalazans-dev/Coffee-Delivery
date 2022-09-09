@@ -17,7 +17,7 @@ const city = "São Paulo";
 const state = "SP";
 
 export const Header = () => {
-  const { productsCartState } = useContext(ProductsContext);
+  const { shoppingCart } = useContext(ProductsContext);
 
   return (
     <HeaderContainer>
@@ -32,7 +32,7 @@ export const Header = () => {
           </AdressContainer>
           <NavLink to="/checkout">
             <CartButton>
-              <span>{productsCartState.length}</span>
+              <span>{shoppingCart.length}</span>
               <ShoppingCart color={shoppingCartCollor} weight="fill" />
             </CartButton>
           </NavLink>

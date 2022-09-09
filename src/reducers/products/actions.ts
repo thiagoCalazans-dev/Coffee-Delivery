@@ -1,4 +1,4 @@
-import { ProductOnCart } from "../../context/ProductsContext";
+import { ShoppingCartProduct } from "../../context/ProductsContext";
 
 export enum ActionTypes {
   ADD_PRODUCT = "ADD_PRODUCT",
@@ -7,7 +7,7 @@ export enum ActionTypes {
   DECREASE_PRODUCT_AMOUNT = " DECREASE_PRODUCT_AMOUNT",
 }
 
-export const addProductAction = (product: ProductOnCart) => {
+export const addProductAction = (product: ShoppingCartProduct) => {
   return {
     type: ActionTypes.ADD_PRODUCT,
     payload: {

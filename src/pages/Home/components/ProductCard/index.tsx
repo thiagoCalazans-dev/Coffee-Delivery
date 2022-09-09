@@ -34,7 +34,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   const handleCartClick = () => {
-    const newProduct = { ...product, quantity: quantity };
+    const newProduct = { productid: product.id, quantity: quantity };
     addProductCart(newProduct);
   };
 
