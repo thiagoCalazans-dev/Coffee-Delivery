@@ -12,6 +12,16 @@ import { useContext } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
 
 export const Success = () => {
+  const { order } = useContext(ProductsContext);
+
+  const getPaymentMethod = () => {
+    if (order.orderOptions["payment-options"] === "money") return "Dinheiro";
+    else if (order.orderOptions["payment-options"] === "credit-card")
+      return "Cartão de crédito";
+    else if (order.orderOptions["payment-options"] === "debit-card")
+      return "Cartão de débito";
+  };
+
   return (
     <SuccessContainer>
       <DetailsContainer>
@@ -24,9 +34,10 @@ export const Success = () => {
             </IconContainer>
             <DetailsTextContainer>
               <span>
-                Entrega em <strong>Rua João Daniel Martinelli, 102</strong>
+                Entrega em{" "}
+                <strong>{`${order.orderOptions.street}, ${order.orderOptions.number}`}</strong>
               </span>
-              <span> Farrapos - Porto Alegre, RS</span>
+              <span>{`${order.orderOptions.neighborhood} - ${order.orderOptions.city}, ${order.orderOptions.state}`}</span>
             </DetailsTextContainer>
           </DetailsCard>
           <DetailsCard>
@@ -44,7 +55,7 @@ export const Success = () => {
             </IconContainer>
             <DetailsTextContainer>
               <span>Pagamento na entrega</span>
-              <strong>Cartão de Crédito</strong>
+              <strong>{getPaymentMethod()}</strong>
             </DetailsTextContainer>
           </DetailsCard>
         </Card>

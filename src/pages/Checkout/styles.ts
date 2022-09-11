@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const CheckoutContainer = styled.main`
+export const CheckoutFormContainer = styled.form`
   padding: 0 10rem;
   margin-top: 2.5rem;
   display: flex;

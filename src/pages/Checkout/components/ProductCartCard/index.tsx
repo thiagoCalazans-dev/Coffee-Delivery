@@ -1,6 +1,9 @@
 import { Minus, Plus, Trash } from "phosphor-react";
 import { useContext } from "react";
-import { ProductsContext, ShoppingCartProduct } from "../../../../context/ProductsContext";
+import {
+  ProductsContext,
+  ShoppingCartProduct,
+} from "../../../../context/ProductsContext";
 import {
   ActionsBox,
   Counter,
@@ -15,11 +18,16 @@ interface ProductCartCardProps {
 }
 
 export const ProductCartCard = ({ product }: ProductCartCardProps) => {
+  const {
+    productList,
+    decreaseShoppingCartItemQuantity,
+    increaseShoppingCartItemQuantity,
+    removeShoppingCartItem,
+  } = useContext(ProductsContext);
 
-  const {productList} = useContext(ProductsContext)
-
-  const [cartProduct] = productList!.products.filter((item) => item.id === product.productid)
-
+  const [cartProduct] = productList!.products.filter(
+    (item) => item.id === product.productid
+  );
 
   return (
     <ProductCartContainer>
@@ -28,15 +36,15 @@ export const ProductCartCard = ({ product }: ProductCartCardProps) => {
         <strong>{cartProduct.title}</strong>
         <ActionsBox>
           <Counter>
-            <button>
+            <button onClick={() => decreaseShoppingCartItemQuantity(product)}>
               <Minus size={14} />
             </button>
             {product.quantity}
-            <button>
+            <button onClick={() => increaseShoppingCartItemQuantity(product)}>
               <Plus size={14} />
             </button>
           </Counter>
-          <RemoveButton>
+          <RemoveButton onClick={() => removeShoppingCartItem(product)}>
             <Trash size={16} />
             <span>Remover</span>
           </RemoveButton>

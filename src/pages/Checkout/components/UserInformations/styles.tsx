@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const UserInformationsContainer = styled.section``;
 
-export const FormContainer = styled.form`
+export const FormContainer = styled.div`
   width: 40rem;
   display: flex;
   flex-direction: column;
@@ -21,6 +21,12 @@ export const FormContainer = styled.form`
       width: 12.5rem;
     }
   }
+`;
+
+export const ErrorMessage = styled.span`
+  margin-top: -0.875rem;
+  color: red;
+  font-size: 0.5rem;
 `;
 
 export const Card = styled.div`

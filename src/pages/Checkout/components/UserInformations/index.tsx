@@ -5,10 +5,13 @@ import {
   MapPinLine,
   Money,
 } from "phosphor-react";
+import { useFormContext } from "react-hook-form";
+import { OrderFormData } from "../..";
 import { Title } from "../../styles";
 import {
   Adress,
   Card,
+  ErrorMessage,
   FormContainer,
   FormControl,
   FormControlNeighborhood,
@@ -19,6 +22,19 @@ import {
 } from "./styles";
 
 export const UserInformations = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<OrderFormData>();
+
+  // type errorMessageNames = keyof OrderFormData;
+
+  // const showErrorMessage = (formName: errorMessageNames) => {
+  //   if (errors[formName]) {
+  //     return <ErrorMessage>{errors[formName]?.message}</ErrorMessage>;
+  //   }
+  // };
+
   return (
     <UserInformationsContainer>
       <Title>Complete seu pedido</Title>
@@ -32,20 +48,23 @@ export const UserInformations = () => {
             </span>
           </InformationCard>
           <Adress>
-            <input placeholder="CEP" />
-            <input placeholder="Rua" />
+            <input placeholder="CEP" {...register("zip-code")} />
+            <input placeholder="Rua" {...register("street")} />{" "}
             <FormControl>
-              <input placeholder="Número" />
+              <input
+                placeholder="Número"
+                {...register("number", { valueAsNumber: true })}
+              />
               <InputWrapper>
-                <input placeholder="Complemento" />
+                <input placeholder="Complemento" {...register("complement")} />
               </InputWrapper>
             </FormControl>
             <FormControlNeighborhood>
-              <input placeholder="Bairro" />
-              <input placeholder="Cidade" />
-              <input placeholder="UF" />
+              <input placeholder="Bairro" {...register("neighborhood")} />
+              <input placeholder="Cidade" {...register("city")} />
+              <input placeholder="UF" {...register("state")} />
             </FormControlNeighborhood>
-          </Adress>{" "}
+          </Adress>
         </Card>
         <Card>
           <InformationCard>
@@ -58,17 +77,32 @@ export const UserInformations = () => {
             </span>
           </InformationCard>
           <RadioGroupControl>
-            <input type="radio" name="payment-options" id="credit-card" />
+            <input
+              type="radio"
+              id="credit-card"
+              value="credit-card"
+              {...register("payment-options")}
+            />
             <label htmlFor="credit-card" tabIndex={0}>
               <CreditCard size={16} color="#8047F8" />
               cartão de crédito
             </label>
-            <input type="radio" name="payment-options" id="debit-card" />
+            <input
+              type="radio"
+              id="debit-card"
+              value="debit-card"
+              {...register("payment-options")}
+            />
             <label htmlFor="debit-card" tabIndex={0}>
               <Bank size={16} color="#8047F8" />
               cartão de débito
             </label>
-            <input type="radio" name="payment-options" id="money" />
+            <input
+              type="radio"
+              id="money"
+              value="money"
+              {...register("payment-options")}
+            />
             <label htmlFor="money" tabIndex={0}>
               <Money size={16} color="#8047F8" />
               dinheiro
