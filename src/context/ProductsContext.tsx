@@ -1,8 +1,13 @@
 import { gql, useQuery } from "@apollo/client";
 import { createContext, ReactNode, useReducer, useState } from "react";
 import { OrderFormData } from "../pages/Checkout";
-import { addProductAction } from "../reducers/products/actions";
-import { ProductReducer } from "../reducers/products/reducer";
+import {
+  addProductAction,
+  decreaseShoppingCartItemQuantityAction,
+  increaseShoppingCartItemQuantityAction,
+  removeShoppingCartItemAction,
+} from "../reducers/shoppingCart/actions";
+import { shoppingCartReducer } from "../reducers/shoppingCart/reducer";
 
 export const ProductsContext = createContext({} as ProductsContextType);
 
@@ -86,9 +91,9 @@ export const ProductsContextProvider = ({
   const { data: productList } = useQuery<{ products: Product[] }>(
     GET_PRODUCTS_QUERY
   );
-  const [shoppingCart, setShoppingCart] = useState<ShoppingCartProduct[]>([]);
+  // const [shoppingCart, setShoppingCart] = useState<ShoppingCartProduct[]>([]);
   const [order, setOrder] = useState({} as Order);
-  // const [productsCartState, dispatch] = useReducer(ProductReducer, []);
+  const [shoppingCart, dispatch] = useReducer(shoppingCartReducer, []);
 
   const handleOrder = (data: OrderFormData) => {
     const newOrder: Order = {
@@ -116,50 +121,68 @@ export const ProductsContextProvider = ({
     0
   ).toFixed(2);
 
+  // STATE FUNCTIONS
+
+  // const addProductCart = (product: ShoppingCartProduct) => {
+  //   if (
+  //     shoppingCart.find((item) => item.productid === product.productid) == null
+  //   ) {
+  //     setShoppingCart([...shoppingCart, product]);
+  //   } else {
+  //     const newShoppingCart = shoppingCart.map((item) => {
+  //       if (item.productid === product.productid) {
+  //         return { ...item, quantity: item.quantity + product.quantity };
+  //       } else {
+  //         return item;
+  //       }
+  //     });
+  //     setShoppingCart(newShoppingCart);
+  //   }
+  // };
+
+  // const increaseShoppingCartItemQuantity = (product: ShoppingCartProduct) => {
+  //   const newShoppingCart = shoppingCart.map((item) => {
+  //     if (item.productid === product.productid) {
+  //       return { ...item, quantity: item.quantity + 1 };
+  //     } else {
+  //       return item;
+  //     }
+  //   });
+  //   setShoppingCart(newShoppingCart);
+  // };
+
+  // const decreaseShoppingCartItemQuantity = (product: ShoppingCartProduct) => {
+  //   const newShoppingCart = shoppingCart.map((item) => {
+  //     if (item.productid === product.productid && item.quantity > 1) {
+  //       return { ...item, quantity: item.quantity - 1 };
+  //     } else {
+  //       return item;
+  //     }
+  //   });
+  //   setShoppingCart(newShoppingCart);
+  // };
+
+  // const removeShoppingCartItem = (product: ShoppingCartProduct) => {
+  //   const newShoppingCart = shoppingCart.filter(
+  //     (item) => item.productid !== product.productid
+  //   );
+  //   setShoppingCart(newShoppingCart);
+  // };
+
   const addProductCart = (product: ShoppingCartProduct) => {
-    if (
-      shoppingCart.find((item) => item.productid === product.productid) == null
-    ) {
-      setShoppingCart([...shoppingCart, product]);
-    } else {
-      const newShoppingCart = shoppingCart.map((item) => {
-        if (item.productid === product.productid) {
-          return { ...item, quantity: item.quantity + product.quantity };
-        } else {
-          return item;
-        }
-      });
-      setShoppingCart(newShoppingCart);
-    }
+    dispatch(addProductAction(product));
   };
 
   const increaseShoppingCartItemQuantity = (product: ShoppingCartProduct) => {
-    const newShoppingCart = shoppingCart.map((item) => {
-      if (item.productid === product.productid) {
-        return { ...item, quantity: item.quantity + 1 };
-      } else {
-        return item;
-      }
-    });
-    setShoppingCart(newShoppingCart);
+    dispatch(increaseShoppingCartItemQuantityAction(product));
   };
 
   const decreaseShoppingCartItemQuantity = (product: ShoppingCartProduct) => {
-    const newShoppingCart = shoppingCart.map((item) => {
-      if (item.productid === product.productid && item.quantity > 1) {
-        return { ...item, quantity: item.quantity - 1 };
-      } else {
-        return item;
-      }
-    });
-    setShoppingCart(newShoppingCart);
+    dispatch(decreaseShoppingCartItemQuantityAction(product));
   };
 
   const removeShoppingCartItem = (product: ShoppingCartProduct) => {
-    const newShoppingCart = shoppingCart.filter(
-      (item) => item.productid !== product.productid
-    );
-    setShoppingCart(newShoppingCart);
+    dispatch(removeShoppingCartItemAction(product));
   };
 
   return (

@@ -5,7 +5,13 @@ import { ProductsContext } from "../../context/ProductsContext";
 import { ProductCartCard } from "./components/ProductCartCard";
 import { TotalContent } from "./components/TotalContent";
 import { UserInformations } from "./components/UserInformations";
-import { AcceptButton, Card, CheckoutFormContainer, Title } from "./styles";
+import {
+  AcceptButton,
+  Card,
+  CheckoutFormContainer,
+  EmptyCartMessage,
+  Title,
+} from "./styles";
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -47,16 +53,18 @@ export const Checkout = () => {
       <section>
         <Title>Cafés selecionados</Title>
         <Card>
-          {shoppingCart.length === 0
-            ? "Adcione algo ao seu carrinho"
-            : shoppingCart.map((cartItens) => {
-                return (
-                  <ProductCartCard
-                    key={cartItens.productid}
-                    product={cartItens}
-                  />
-                );
-              })}
+          {shoppingCart.length === 0 ? (
+            <EmptyCartMessage>Adcione algo ao seu carrinho</EmptyCartMessage>
+          ) : (
+            shoppingCart.map((cartItens) => {
+              return (
+                <ProductCartCard
+                  key={cartItens.productid}
+                  product={cartItens}
+                />
+              );
+            })
+          )}
 
           <TotalContent />
           <AcceptButton>Confirmar Pedido</AcceptButton>

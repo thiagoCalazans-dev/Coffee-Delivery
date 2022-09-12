@@ -25,6 +25,11 @@ export const Card = styled.div`
   border-radius: 6px 44px;
 `;
 
+export const EmptyCartMessage = styled.span`
+  text-align: center;
+  color: ${(props) => props.theme["base-600"]};
+`;
+
 export const AcceptButton = styled.button`
   margin-top: 1.5rem;
   background-color: ${(props) => props.theme["brand-yellow"]};
