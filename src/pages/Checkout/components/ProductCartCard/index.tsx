@@ -25,9 +25,13 @@ export const ProductCartCard = ({ product }: ProductCartCardProps) => {
     removeShoppingCartItem,
   } = useContext(ProductsContext);
 
-  const [cartProduct] = productList!.products.filter(
+  const cartProduct = productList?.products.filter(
     (item) => item.id === product.productid
-  );
+  )[0];
+
+  if (cartProduct === undefined) {
+    return <span>loading...</span>;
+  }
 
   return (
     <ProductCartContainer>

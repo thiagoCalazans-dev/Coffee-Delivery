@@ -32,7 +32,7 @@ export const Header = () => {
           </AdressContainer>
           <NavLink to="/checkout">
             <CartButton>
-              <span>{cartQuantity}</span>
+              {cartQuantity > 0 && <span>{cartQuantity}</span>}
               <ShoppingCart color={shoppingCartCollor} weight="fill" />
             </CartButton>
           </NavLink>

@@ -1,11 +1,18 @@
 import { gql, useQuery } from "@apollo/client";
-import { createContext, ReactNode, useReducer, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import { OrderFormData } from "../pages/Checkout";
 import {
   addProductAction,
   decreaseShoppingCartItemQuantityAction,
   increaseShoppingCartItemQuantityAction,
   removeShoppingCartItemAction,
+  resetShoppingCartAction,
 } from "../reducers/shoppingCart/actions";
 import { shoppingCartReducer } from "../reducers/shoppingCart/reducer";
 
@@ -65,6 +72,7 @@ interface ProductsContextType {
   TotalShoppingCartValue: string;
   handleOrder: (data: OrderFormData) => void;
   order: Order;
+  resetShoppingCart: () => void;
 }
 
 export const ProductsContextProvider = ({
@@ -93,7 +101,36 @@ export const ProductsContextProvider = ({
   );
   // const [shoppingCart, setShoppingCart] = useState<ShoppingCartProduct[]>([]);
   const [order, setOrder] = useState({} as Order);
-  const [shoppingCart, dispatch] = useReducer(shoppingCartReducer, []);
+  const [shoppingCart, dispatch] = useReducer(
+    shoppingCartReducer,
+    [],
+    (): ShoppingCartProduct[] => {
+      const storageStateAsJSON = localStorage.getItem(
+        "@ignite-coffee-delivery: shoppingCart-state"
+      );
+      if (storageStateAsJSON) {
+        return JSON.parse(storageStateAsJSON);
+      }
+      return [];
+    }
+  );
+
+  // useEffect(() => {
+  //   const storageStateAsJSON = localStorage.getItem(
+  //     "@ignite-coffee-delivery: shoppingCart-state"
+  //   );
+  //   if (storageStateAsJSON) {
+  //     console.log(JSON.parse(storageStateAsJSON));
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(shoppingCart);
+    localStorage.setItem(
+      "@ignite-coffee-delivery: shoppingCart-state",
+      stateJSON
+    );
+  }, [shoppingCart]);
 
   const handleOrder = (data: OrderFormData) => {
     const newOrder: Order = {
@@ -109,17 +146,21 @@ export const ProductsContextProvider = ({
   );
 
   const getProductValue = (id: string) => {
-    return productList!.products.filter((item) => item.id === id)[0].value;
+    return productList
+      ? productList.products.filter((item) => item.id === id)[0].value
+      : 0;
   };
 
   const TotalShoppingItemValue = shoppingCart.map(
     (item) => item.quantity * getProductValue(item.productid)
   );
 
-  const TotalShoppingCartValue = TotalShoppingItemValue.reduce(
-    (value, item) => item + value,
-    0
-  ).toFixed(2);
+  const TotalShoppingCartValue =
+    TotalShoppingItemValue.length >= 0
+      ? TotalShoppingItemValue.reduce((value, item) => item + value, 0).toFixed(
+          2
+        )
+      : "0";
 
   // STATE FUNCTIONS
 
@@ -169,6 +210,10 @@ export const ProductsContextProvider = ({
   //   setShoppingCart(newShoppingCart);
   // };
 
+  // const getLocalStorageItem = (shoppingCart: ShoppingCartProduct[]) => {
+  //   dispatch(getLocalStorageItem(shoppingCart));
+  // };
+
   const addProductCart = (product: ShoppingCartProduct) => {
     dispatch(addProductAction(product));
   };
@@ -185,6 +230,10 @@ export const ProductsContextProvider = ({
     dispatch(removeShoppingCartItemAction(product));
   };
 
+  const resetShoppingCart = () => {
+    dispatch(resetShoppingCartAction({} as ShoppingCartProduct));
+  };
+
   return (
     <ProductsContext.Provider
       value={{
@@ -198,6 +247,7 @@ export const ProductsContextProvider = ({
         removeShoppingCartItem,
         TotalShoppingCartValue,
         handleOrder,
+        resetShoppingCart,
       }}
     >
       {children}

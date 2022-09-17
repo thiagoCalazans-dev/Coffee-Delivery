@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-export const HomeContainer = styled.main``;
-
 export const ProductsSection = styled.section`
   padding: 2rem 10rem 10rem 10rem;
 

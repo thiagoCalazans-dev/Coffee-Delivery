@@ -1,15 +1,24 @@
-import { ShoppingCartProduct } from "../../context/ProductsContext";
+import { Product, ShoppingCartProduct } from "../../context/ProductsContext";
 import { ActionTypes } from "./actions";
+
+type product = {
+  product: ShoppingCartProduct;
+};
+
+interface Action {
+  type: string;
+  payload: product;
+}
 
 export const shoppingCartReducer = (
   state: ShoppingCartProduct[],
-  action: any
+  action: Action
 ) => {
   switch (action.type) {
     case ActionTypes.ADD_PRODUCT_CART: {
       if (
         state.find(
-          (item) => item.productid === action.payload.product.productid
+          (item) => item.productid === action.payload.product?.productid
         ) == null
       ) {
         return [...state, action.payload.product];
@@ -55,6 +64,9 @@ export const shoppingCartReducer = (
         (item) => item.productid !== action.payload.product.productid
       );
       return newShoppingCart;
+    }
+    case ActionTypes.RESET_SHOPPING_CART: {
+      return [];
     }
     default:
       return state;

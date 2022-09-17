@@ -2,13 +2,13 @@ import { useContext } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
 import { ProductCard } from "./components/ProductCard";
 import { IntroSection } from "./components/IntroSection";
-import { CatalogContainer, HomeContainer, ProductsSection } from "./styles";
+import { CatalogContainer, ProductsSection } from "./styles";
 
 export const Home = () => {
   const { productList } = useContext(ProductsContext);
 
   return (
-    <HomeContainer>
+    <main>
       <IntroSection />
       <ProductsSection>
         <h2>Nossos cafés</h2>
@@ -18,6 +18,6 @@ export const Home = () => {
           ))}
         </CatalogContainer>
       </ProductsSection>
-    </HomeContainer>
+    </main>
   );
 };

@@ -31,7 +31,8 @@ export type OrderFormData = zod.infer<typeof orderFormValidationSchema>;
 export const Checkout = () => {
   const navigate = useNavigate();
 
-  const { shoppingCart, handleOrder } = useContext(ProductsContext);
+  const { shoppingCart, handleOrder, resetShoppingCart } =
+    useContext(ProductsContext);
 
   const orderForm = useForm<OrderFormData>({
     resolver: zodResolver(orderFormValidationSchema),
@@ -42,6 +43,8 @@ export const Checkout = () => {
 
   const handleSendOrder = (data: OrderFormData) => {
     handleOrder(data);
+    localStorage.removeItem("@ignite-coffee-delivery: shoppingCart-state");
+    resetShoppingCart();
     navigate("/success");
   };
 
@@ -53,7 +56,7 @@ export const Checkout = () => {
       <section>
         <Title>Cafés selecionados</Title>
         <Card>
-          {shoppingCart.length === 0 ? (
+          {shoppingCart.length < 1 ? (
             <EmptyCartMessage>Adcione algo ao seu carrinho</EmptyCartMessage>
           ) : (
             shoppingCart.map((cartItens) => {
